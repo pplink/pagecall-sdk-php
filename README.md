@@ -11,7 +11,7 @@ The `PageCall` SDK for PHP makes it easy for developers to access PageCall in th
 ## Installation
 
 ```
-composer require pagecall 
+composer require pplink/page-call 
 ```
 
 ## Quick Examples
