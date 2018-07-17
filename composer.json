@@ -1,0 +1,30 @@
+{
+    "name": "PageCall",
+    "description": "PageCall PHP SDK",
+    "type": "library",
+    "keywords": [
+        "PageCall",
+        "PCA",
+        "sdk"
+    ],
+    "authors": [
+        {
+            "name": "PPLINK",
+            "email": "support@pplink.net",
+            "homepage": "https://www.pplink.net/"
+        }
+    ],
+    "homepage": "https://www.pplink.net/",
+    "autoload": {
+        "psr-4": {
+            "PageCall\\": "."
+        },
+        "files": [
+            "Constants/PageCall.php"
+        ]
+    },
+    "require": {
+        "php": ">=7.1.0",
+        "ext-curl": "*"
+    }
+}
