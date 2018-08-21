@@ -89,14 +89,6 @@ class PageCall implements \PageCall\Interfaces\PageCall
             $this->accessToken = new AccessToken($this->config['accessKey'], $this->config['secretKey']);
         }
 
-        if ( !$data['userId'] ) {
-            throw new PageCallSDKException('"userId" is required.');
-        }
-
-        if ( !$data['partnerId'] ) {
-            throw new PageCallSDKException('"partnerId" is required.');
-        }
-
         if ( !$data['roomId'] ) {
             throw new PageCallSDKException('"partnerId" is required.');
         }
