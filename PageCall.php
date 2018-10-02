@@ -7,6 +7,7 @@ use PageCall\Exceptions\PageCallAuthenticationException;
 use PageCall\Exceptions\PageCallAuthenticationTokenExpiredException;
 use PageCall\Exceptions\PageCallSDKException;
 use PageCall\Authentication\AccessToken;
+use PageCall\Interfaces\Response\ConnectIn;
 
 /**
 * Type Definitions for PageCall SDK v1.0.0
@@ -72,6 +73,50 @@ class PageCall implements \PageCall\Interfaces\PageCall
         }
         curl_close($ch);
 
+        return $response;
+    }
+
+    /**
+     * @param array $data
+     * @return array
+     * @throws PageCallAuthenticationException
+     * @throws PageCallSDKException
+     */
+    public function connectIn(array $data = []): array
+    {
+        try {
+            AccessToken::validate($this->accessToken->tokenInformation);
+        } catch ( PageCallAuthenticationTokenExpiredException $e ) {
+            $this->accessToken = new AccessToken($this->config['accessKey'], $this->config['secretKey']);
+        }
+
+        if ( !$data['userId'] ) {
+            throw new PageCallSDKException('"userId" is required.');
+        }
+
+        if ( !$data['publicRoomId'] ) {
+            throw new PageCallSDKException('"publicRoomId" is required.');
+        }
+
+        $ch = curl_init(__PAGE_CALL_API_ENDPOINT__.'connection/in');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Authorization: Bearer '. $this->accessToken->tokenInformation['token']
+        ]);
+
+        $response = (array)json_decode(curl_exec($ch), true);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        if ( (int)substr($httpCode, 0, 1) !== 2 ) {
+            throw new PageCallSDKException(curl_error($ch), 401);
+        }
+
+        if ( $response['error'] ) {
+            throw new PageCallSDKException(new \Error($response['error']), 401);
+        }
+
+        curl_close($ch);
         return $response;
     }
 
