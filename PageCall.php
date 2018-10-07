@@ -112,10 +112,6 @@ class PageCall implements \PageCall\Interfaces\PageCall
             throw new PageCallSDKException(curl_error($ch), 401);
         }
 
-        if ( $response['error'] ) {
-            throw new PageCallSDKException(new \Error($response['error']), 401);
-        }
-
         curl_close($ch);
         return $response;
     }
