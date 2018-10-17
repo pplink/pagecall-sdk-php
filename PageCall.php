@@ -150,4 +150,32 @@ class PageCall implements \PageCall\Interfaces\PageCall
 
         return $response;
     }
+    public function connectReplayLegacy(array $data = []): array
+    {
+        try {
+            AccessToken::validate($this->accessToken->tokenInformation);
+        } catch ( PageCallAuthenticationTokenExpiredException $e ) {
+            $this->accessToken = new AccessToken($this->config['accessKey'], $this->config['secretKey']);
+        }
+
+        if ( !$data['noteFile'] ) {
+            throw new PageCallSDKException('"noteFile" is required.');
+        }
+
+        $ch = curl_init(__PAGE_CALL_API_ENDPOINT__.'connection/replay-legacy');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Authorization: Bearer '. $this->accessToken->tokenInformation['token']
+        ]);
+        $response = (array)json_decode(curl_exec($ch), true);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        if ( (int)substr($httpCode, 0, 1) !== 2 ) {
+            throw new PageCallSDKException(curl_error($ch), 401);
+        }
+        curl_close($ch);
+
+        return $response;
+    }
 }
