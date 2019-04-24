@@ -28,7 +28,7 @@ $pageCall = new \PageCall\PageCall([
 ]);
 ```
 
-### Bring in a PageCall View
+### Bring in a PageCall
 ```php
 // change path as needed
 require_once __DIR__ . '/vendor/autoload.php';
@@ -39,7 +39,10 @@ try {
         'secretKey' => 'test'
     ]);
 
-    $pca = $pageCall->connectWith(yourParams);
+    $pca = $pageCall->connectIn([
+        'userId' => $_POST['userId'],
+        'publicRoomId' => $_POST['publicRoomId']
+    ]);
     echo $pca['html'];
 } catch (\PageCall\Exceptions\PageCallSDKException $e) {
 
