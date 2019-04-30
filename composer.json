@@ -4,8 +4,7 @@
     "type": "library",
     "keywords": [
         "PageCall",
-        "PCA",
-        "sdk"
+        "PCA"
     ],
     "authors": [
         {
@@ -14,17 +13,23 @@
             "homepage": "https://www.pplink.net/"
         }
     ],
-    "homepage": "https://www.pplink.net/",
+    "homepage": "https://github.com/pplink/pagecall-sdk-php",
     "autoload": {
         "psr-4": {
             "PageCall\\": "."
         },
         "files": [
             "Constants/PageCall.php"
+        ],
+        "classmap": [
+            "."
         ]
     },
     "require": {
-        "php": ">=7.1.0",
+        "php": ">=7.0.0",
         "ext-curl": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6"
     }
 }
