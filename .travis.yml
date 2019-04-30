@@ -24,6 +24,5 @@ matrix:
 
 before_script:
   - sh -c "composer install --dev --no-progress"
-  - php -S localhost:8000 index.php &
 
 script: ./vendor/bin/phpunit
