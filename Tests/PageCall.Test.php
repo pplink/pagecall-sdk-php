@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use PageCall\PageCall;
 use PageCall\Exceptions\PageCallAuthenticationException;
 use PageCall\Exceptions\PageCallAuthenticationTokenExpiredException;
@@ -9,6 +11,9 @@ final class PageCallTest extends PHPUnit\Framework\TestCase {
     public function testMissingRequirementParam()
     {
         $this->expectException(PageCallSDKException::class);
-        $pagecall = new PageCall();
+        $pagecall = new PageCall([
+            'accessKey' => '',
+            'secretKey' => ''
+        ]);
     }
 }

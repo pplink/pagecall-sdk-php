@@ -1,4 +1,4 @@
-# PageCall SDK For PHP
+# PageCall SDK For PHP  <a href="https://travis-ci.org/pplink/pagecall-sdk-php"><img src="https://travis-ci.org/pplink/pagecall-sdk-php.svg" alt="Build Status"></a>
 
 The `PageCall` SDK for PHP makes it easy for developers to access PageCall in their PHP code.
 
