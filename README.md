@@ -4,7 +4,7 @@ The `PageCall` SDK for PHP makes it easy for developers to access PageCall in th
 
 ## Prerequisites
 
-- PHP 7.1 or above
+- PHP 7.0 or above
 - PHP CURL extension
 - Composer
 
