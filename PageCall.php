@@ -37,6 +37,36 @@ class PageCall implements \PageCall\Interfaces\PageCall
     }
 
     /**
+     * @return array
+     * @throws PageCallAuthenticationException
+     * @throws PageCallSDKException
+     */
+    public function onGoing(): array
+    {
+        try {
+            AccessToken::validate($this->accessToken->tokenInformation);
+        } catch ( PageCallAuthenticationTokenExpiredException $e ) {
+            $this->accessToken = new AccessToken($this->config['accessKey'], $this->config['secretKey']);
+        }
+
+        $ch = curl_init(__PAGE_CALL_API_ENDPOINT__.'information/ongoing');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Authorization: Bearer '. $this->accessToken->tokenInformation['token']
+        ]);
+        $response = json_decode(curl_exec($ch), true);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        if ( (int)substr($httpCode, 0, 1) !== 2 ) {
+            throw new PageCallSDKException(curl_error($ch), 401);
+        }
+        curl_close($ch);
+
+        return $response;
+    }
+
+
+    /**
      * @param array $data
      * @return array
      * @throws PageCallSDKException
