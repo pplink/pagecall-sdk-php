@@ -8,6 +8,7 @@ namespace PageCall\Interfaces;
  */
 interface PageCall
 {
-    public function connectWith(array $data): array;
-
+    public function connectIn(array $data): array;
+    public function connectReplay(array $data): array;
+    public function connectReplayLegacy(array $data): array;
 }
